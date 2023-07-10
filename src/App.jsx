@@ -5,15 +5,15 @@ import Header from "./components/Header";
 import TodoList from "./components/TodoList";
 
 function App() {
-  const [tasklist, setTaskList] = useState([]);
+  const [taskList, setTaskList] = useState([]);
 
   return (
     <div className="container mx-auto rounded">
       <Toaster />
       <Header />
       <main className="mt-12 md:flex md:justify-around items-start">
-        <Form tasklist={tasklist} setTaskList={setTaskList} />
-        <TodoList tasklist={tasklist} />
+        <Form taskList={taskList} setTaskList={setTaskList} />
+        <TodoList taskList={taskList} setTaskList={setTaskList} />
       </main>
     </div>
   );

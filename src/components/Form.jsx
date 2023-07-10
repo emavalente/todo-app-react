@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { createId } from "../helpers";
 
-const Formulario = ({ tasklist, setTaskList }) => {
+const Formulario = ({ taskList, setTaskList }) => {
   const [taskTitle, setTaskTitle] = useState("");
   const [importance, setImportance] = useState("bg-indigo-400");
   const [dateInitiated, setDateInitiated] = useState("");
@@ -12,7 +12,15 @@ const Formulario = ({ tasklist, setTaskList }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Form Validation
-    if ([taskTitle, dateInitiated, dateFinished, description].includes("")) {
+    if (
+      [
+        taskTitle,
+        dateInitiated,
+        importance,
+        dateFinished,
+        description,
+      ].includes("")
+    ) {
       toast.error("Todos los campos son obligatorios");
       return;
     }
@@ -23,17 +31,25 @@ const Formulario = ({ tasklist, setTaskList }) => {
       dateFinished,
       description,
     };
-    setTaskList([...tasklist, { ...objTask, id: createId() }]);
+    setTaskList([...taskList, { ...objTask, id: createId() }]);
 
     // Form Reset
     setTaskTitle("");
-    setImportance("");
+    setImportance("bg-indigo-400");
     setDateInitiated("");
     setDateFinished("");
     setDescription("");
     toast.success("Tarea agregada con exito!");
   };
 
+  const cleanList = () => {
+    if (taskList.length === 0) {
+      toast.error("La lista de tareas ya esta vacía");
+      return;
+    }
+    setTaskList([]);
+    toast.success("Lista de tareas ha sido limpiada correctamente");
+  };
   return (
     <div className="w-full md:w-2/5 mb-8">
       <h2 className="mb-2 font-black text-2xl text-center">
@@ -85,14 +101,12 @@ const Formulario = ({ tasklist, setTaskList }) => {
               }
             }}
           >
-            <option value="bg-indigo-400" className="font-bold text-indigo-400">
-              Normal
-            </option>
+            <option className="font-bold text-indigo-400">Normal</option>
             <option value="bg-yellow-600" className="font-bold text-yellow-600">
               Regular
             </option>
             <option value="bg-red-600" className="font-bold text-red-600">
-              Muy importante
+              Importante
             </option>
           </select>
         </div>
@@ -166,13 +180,11 @@ const Formulario = ({ tasklist, setTaskList }) => {
           value="Limpiar Lista"
           className="w-full h-16 m-1 font-bold text-center text-2xl text-slate-50 bg-purple-800 rounded hover:bg-purple-700 hover:cursor-pointer"
           onClick={() => {
-            () => {
-              console.log("Lista Eliminada!!!!");
-            };
+            cleanList();
           }}
         />
       </form>
-      {tasklist.length > 0 && (
+      {taskList.length > 0 && (
         <a href="#task-list">
           <ion-icon name="arrow-down-circle-outline"></ion-icon>
         </a>

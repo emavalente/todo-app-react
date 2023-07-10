@@ -7,10 +7,17 @@ const Task = ({
   dateFinished,
   description,
   id,
+  taskList,
+  setTaskList,
 }) => {
   const [expanded, setExpanded] = useState(false);
+  console.log(taskList);
+  const deleteTask = (id) => {
+    const tasksFiltered = taskList.filter((taskState) => taskState.id !== id);
+    setTaskList(tasksFiltered);
+  };
 
-  const expandingTask = () => {
+  const toggleTask = () => {
     if (expanded) {
       setExpanded(false);
     } else {
@@ -50,15 +57,9 @@ const Task = ({
             Finalización: <span className="font-semibold">{dateFinished}</span>
           </p>
           {expanded ? (
-            <ion-icon
-              name="caret-up-outline"
-              onClick={expandingTask}
-            ></ion-icon>
+            <ion-icon name="caret-up-outline" onClick={toggleTask}></ion-icon>
           ) : (
-            <ion-icon
-              name="caret-down-outline"
-              onClick={expandingTask}
-            ></ion-icon>
+            <ion-icon name="caret-down-outline" onClick={toggleTask}></ion-icon>
           )}
         </div>
       </div>
@@ -69,7 +70,10 @@ const Task = ({
         <button className="px-4 py-1 mx-2 text-slate-50 bg-purple-500 rounded hover:bg-purple-400">
           Editar
         </button>
-        <button className="px-4 py-1 mx-2 text-slate-50 bg-red-500 rounded hover:bg-red-400">
+        <button
+          className="px-4 py-1 mx-2 text-slate-50 bg-red-500 rounded hover:bg-red-400"
+          onClick={() => deleteTask(id)}
+        >
           Eliminar
         </button>
       </div>
