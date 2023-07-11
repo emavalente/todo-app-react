@@ -9,6 +9,8 @@ const Task = ({
   id,
   taskList,
   setTaskList,
+  setTask,
+  taskToEdit,
 }) => {
   const [expanded, setExpanded] = useState(false);
   console.log(taskList);
@@ -24,19 +26,20 @@ const Task = ({
       setExpanded(true);
     }
   };
-
   return (
     <div
       className={`w-full p-5 mb-5 ${
         expanded ? "h-auto" : "h-[110px] xl:h-[90px] overflow-hidden"
       }  ${importance} rounded-md transition-all ${
-        importance === "bg-red-600" ? "text-slate-50" : "text-black"
+        importance === "bg-red-600" || importance === "bg-indigo-600"
+          ? "text-slate-50"
+          : "text-black"
       }`}
     >
       <div className="flex flex-col justify-between xl:flex-row xl:items-center">
         <h3 className="flex items-center font-bold uppercase ">
           <span className="mr-2">
-            {importance === "bg-indigo-400" ? (
+            {importance === "bg-indigo-600" ? (
               <ion-icon name="arrow-redo-circle-outline"></ion-icon>
             ) : importance === "bg-yellow-600" ? (
               <ion-icon name="notifications-circle-outline"></ion-icon>
@@ -67,11 +70,25 @@ const Task = ({
       <p className="text-center my-5">{description}</p>
 
       <div className="mt-5 flex justify-end">
-        <button className="px-4 py-1 mx-2 text-slate-50 bg-purple-500 rounded hover:bg-purple-400">
+        <button
+          disabled={taskToEdit.id ? true : false}
+          className="px-4 py-1 mx-2 text-slate-50 bg-purple-600 rounded hover:bg-purple-500"
+          onClick={() => {
+            setTask({
+              title,
+              importance,
+              dateInitiated,
+              dateFinished,
+              description,
+              id,
+            });
+          }}
+        >
           Editar
         </button>
         <button
-          className="px-4 py-1 mx-2 text-slate-50 bg-red-500 rounded hover:bg-red-400"
+          disabled={taskToEdit.id ? true : false}
+          className="px-4 py-1 mx-2 text-slate-50 bg-red-700 rounded hover:bg-red-500"
           onClick={() => deleteTask(id)}
         >
           Eliminar

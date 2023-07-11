@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { createId } from "../helpers";
 
-const Formulario = ({ taskList, setTaskList }) => {
+const Formulario = ({ taskList, setTaskList, task, setTask }) => {
   const [taskTitle, setTaskTitle] = useState("");
-  const [importance, setImportance] = useState("bg-indigo-400");
+  const [importance, setImportance] = useState("bg-indigo-600");
   const [dateInitiated, setDateInitiated] = useState("");
   const [dateFinished, setDateFinished] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (Object.keys(task).length > 0) {
+      const { title, importance, dateInitiated, dateFinished, description } =
+        task;
+      setTaskTitle(title);
+      setImportance(importance);
+      setDateInitiated(dateInitiated);
+      setDateFinished(dateFinished);
+      setDescription(description);
+    }
+  }, [task]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +36,7 @@ const Formulario = ({ taskList, setTaskList }) => {
       toast.error("Todos los campos son obligatorios");
       return;
     }
+
     const objTask = {
       title: taskTitle,
       importance,
@@ -31,15 +44,25 @@ const Formulario = ({ taskList, setTaskList }) => {
       dateFinished,
       description,
     };
-    setTaskList([...taskList, { ...objTask, id: createId() }]);
+
+    if (task.id) {
+      const editedList = taskList.map((taskState) =>
+        taskState.id === task.id ? { ...objTask, id: task.id } : taskState
+      );
+      setTaskList(editedList);
+      setTask({});
+      toast.success("Tarea actualizada!");
+    } else {
+      setTaskList([...taskList, { ...objTask, id: createId() }]);
+      toast.success("Nueva tarea agregada!");
+    }
 
     // Form Reset
     setTaskTitle("");
-    setImportance("bg-indigo-400");
+    setImportance("bg-indigo-600");
     setDateInitiated("");
     setDateFinished("");
     setDescription("");
-    toast.success("Tarea agregada con exito!");
   };
 
   const cleanList = () => {
@@ -50,6 +73,7 @@ const Formulario = ({ taskList, setTaskList }) => {
     setTaskList([]);
     toast.success("Lista de tareas ha sido limpiada correctamente");
   };
+
   return (
     <div className="w-full md:w-2/5 mb-8">
       <h2 className="mb-2 font-black text-2xl text-center">
@@ -101,7 +125,9 @@ const Formulario = ({ taskList, setTaskList }) => {
               }
             }}
           >
-            <option className="font-bold text-indigo-400">Normal</option>
+            <option value="bg-indigo-600" className="font-bold text-indigo-600">
+              Normal
+            </option>
             <option value="bg-yellow-600" className="font-bold text-yellow-600">
               Regular
             </option>
@@ -171,7 +197,7 @@ const Formulario = ({ taskList, setTaskList }) => {
         </div>
         <input
           type="submit"
-          value="Agregar"
+          value={`${task.id ? "Guardar Edición" : "Agregar Tarea"}`}
           className="w-full h-16 m-1 font-bold text-center text-2xl text-slate-50 bg-purple-800 rounded hover:bg-purple-700 hover:cursor-pointer"
           onClick={handleSubmit}
         />

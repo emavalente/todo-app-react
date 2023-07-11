@@ -1,5 +1,5 @@
 import Task from "./Task";
-const TodoList = ({ taskList, setTaskList }) => {
+const TodoList = ({ taskList, setTaskList, setTask, task: taskToEdit }) => {
   return (
     <div className="w-full mb-8 md:w-3/5 md:ml-10">
       <h2 id="task-list" className="mb-16 font-black text-2xl text-center">
@@ -13,6 +13,8 @@ const TodoList = ({ taskList, setTaskList }) => {
               {...task}
               taskList={taskList}
               setTaskList={setTaskList}
+              setTask={setTask}
+              taskToEdit={taskToEdit}
             />
           ))
         ) : (
