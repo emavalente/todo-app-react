@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import TodoList from "./components/TodoList";
 
 function App() {
-  const [taskList, setTaskList] = useState([]);
+  const [taskList, setTaskList] = useState(
+    JSON.parse(localStorage.getItem("taskList")) ?? []
+  );
   const [task, setTask] = useState({});
+
+  useEffect(() => {
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+  }, [taskList]);
 
   return (
     <div className="container mx-auto rounded">

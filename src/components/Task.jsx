@@ -28,9 +28,9 @@ const Task = ({
   };
   return (
     <div
-      className={`w-full p-5 mb-5 ${
+      className={`w-full p-5 mb-5  ${
         expanded ? "h-auto" : "h-[110px] xl:h-[90px] overflow-hidden"
-      }  ${importance} rounded-md transition-all ${
+      }  ${importance} rounded-md transition-all shadow-inner ${
         importance === "bg-red-600" || importance === "bg-indigo-600"
           ? "text-slate-50"
           : "text-black"
@@ -72,7 +72,7 @@ const Task = ({
       <div className="mt-5 flex justify-end">
         <button
           disabled={taskToEdit.id ? true : false}
-          className="px-4 py-1 mx-2 text-slate-50 bg-purple-600 rounded hover:bg-purple-500"
+          className="px-4 py-1 mx-2 text-slate-50 bg-purple-600 rounded hover:bg-purple-500 shadow-inner"
           onClick={() => {
             setTask({
               title,
@@ -88,7 +88,7 @@ const Task = ({
         </button>
         <button
           disabled={taskToEdit.id ? true : false}
-          className="px-4 py-1 mx-2 text-slate-50 bg-red-700 rounded hover:bg-red-500"
+          className="px-4 py-1 mx-2 text-slate-50 bg-red-700 rounded hover:bg-red-500 shadow-inner"
           onClick={() => deleteTask(id)}
         >
           Eliminar

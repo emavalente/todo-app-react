@@ -37,6 +37,7 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
       return;
     }
 
+    // Obbject Model To Create A Task
     const objTask = {
       title: taskTitle,
       importance,
@@ -46,6 +47,7 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
     };
 
     if (task.id) {
+      // Inside Edite Mode
       const editedList = taskList.map((taskState) =>
         taskState.id === task.id ? { ...objTask, id: task.id } : taskState
       );
@@ -53,6 +55,7 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
       setTask({});
       toast.success("Tarea actualizada!");
     } else {
+      // Inside Create A New Task
       setTaskList([...taskList, { ...objTask, id: createId() }]);
       toast.success("Nueva tarea agregada!");
     }
@@ -71,19 +74,19 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
       return;
     }
     setTaskList([]);
-    toast.success("Lista de tareas ha sido limpiada correctamente");
+    toast.success("Lista de tareas fue limpiada");
   };
 
   return (
-    <div className="w-full md:w-2/5 mb-8">
+    <div className="w-full md:w-2/5 mb-8 ">
       <h2 className="mb-2 font-black text-2xl text-center">
         Formulario de tareas
       </h2>
       <p className="mb-8 font-semibold text-center">
         Añade tus tareas y {""}
-        <span className="text-purple-400">Adminístralas</span>
+        <span className="text-purple-600">Adminístralas</span>
       </p>
-      <form className="py-10 px-5 relative text-black bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-lg shadow-xl">
+      <form className="py-10 px-5 relative text-black bg-gradient-to-l from-pink-400 to-pink-600 rounded-lg shadow-xl">
         {/* Task Title */}
         <div className="mb-4">
           <label
@@ -99,11 +102,7 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
             placeholder="Describe aquí tu tarea"
             value={taskTitle}
             className="w-full p-2 rounded placeholder-gray-400"
-            onChange={(e) => {
-              {
-                setTaskTitle(e.target.value);
-              }
-            }}
+            onChange={(e) => setTaskTitle(e.target.value)}
           />
         </div>
         {/* Importance */}
@@ -119,11 +118,7 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
             id="importance"
             value={importance}
             className="w-full md:w-[calc(100%-123px)] p-2 rounded"
-            onChange={(e) => {
-              {
-                setImportance(e.target.value);
-              }
-            }}
+            onChange={(e) => setImportance(e.target.value)}
           >
             <option value="bg-indigo-600" className="font-bold text-indigo-600">
               Normal
@@ -149,11 +144,7 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
             type="date"
             value={dateInitiated}
             className="block w-full p-2 rounded"
-            onChange={(e) => {
-              {
-                setDateInitiated(e.target.value);
-              }
-            }}
+            onChange={(e) => setDateInitiated(e.target.value)}
           />
         </div>
         {/* Date Finished */}
@@ -169,11 +160,7 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
             type="date"
             className="block w-full p-2 rounded"
             value={dateFinished}
-            onChange={(e) => {
-              {
-                setDateFinished(e.target.value);
-              }
-            }}
+            onChange={(e) => setDateFinished(e.target.value)}
           />
         </div>
         {/* Description */}
@@ -188,23 +175,19 @@ const Formulario = ({ taskList, setTaskList, task, setTask }) => {
             id="description"
             className="block w-full p-2 rounded resize-none"
             value={description}
-            onChange={(e) => {
-              {
-                setDescription(e.target.value);
-              }
-            }}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <input
           type="submit"
           value={`${task.id ? "Guardar Edición" : "Agregar Tarea"}`}
-          className="w-full h-16 m-1 font-bold text-center text-2xl text-slate-50 bg-purple-800 rounded hover:bg-purple-700 hover:cursor-pointer"
+          className="w-full h-16 m-1 font-bold text-center text-2xl text-slate-50 bg-purple-800 rounded hover:bg-purple-700 hover:cursor-pointer shadow-inner"
           onClick={handleSubmit}
         />
         <input
           type="button"
           value="Limpiar Lista"
-          className="w-full h-16 m-1 font-bold text-center text-2xl text-slate-50 bg-purple-800 rounded hover:bg-purple-700 hover:cursor-pointer"
+          className="w-full h-16 m-1 font-bold text-center text-2xl text-slate-50 bg-purple-800 rounded hover:bg-purple-700 hover:cursor-pointer shadow-inner"
           onClick={() => {
             cleanList();
           }}

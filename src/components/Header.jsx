@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div>
       <h1 className="font-black text-5xl text-center mt-10 mb-2">
-        <span className="text-purple-400">TODO {""}</span>APP
+        <span className="text-purple-600">TODO {""}</span>APP
       </h1>
     </div>
   );

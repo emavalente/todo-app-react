@@ -5,7 +5,7 @@ const TodoList = ({ taskList, setTaskList, setTask, task: taskToEdit }) => {
       <h2 id="task-list" className="mb-16 font-black text-2xl text-center">
         Listado de tareas
       </h2>
-      <div className="p-8 px-5 text-black bg-slate-50 rounded-md">
+      <div className="p-8 px-5 text-black bg-slate-50 rounded-md shadow-xl">
         {taskList.length > 0 ? (
           taskList.map((task) => (
             <Task
